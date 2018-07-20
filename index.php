@@ -1,18 +1,32 @@
-<a href="SQLSrc/cleanDatabase.php">
-    <input type="button" value="Step 1. (clean DB)">
+
+<a href="SQLSrc/GeneralScripts/cleanDatabase.php">
+    <input type="button" value="Update Behemoths Step 1. (clean DB) ">
+</a>
+<a href="SQLSrc/GeneralScripts/linkMagiStash.php">
+    <input type="button" value="Update Magi">
+</a>
+<br>
+<br>
+<a href="SQLSrc/GeneralScripts/behemothQuery.php">
+    <input type="button" value="Search behemoths">
+</a>
+<a href="SQLSrc/GeneralScripts/magiQuery.php">
+    <input type="button" value="Search magis">
 </a>
 <!-- SUPER BAREBONES SORRY UWU just look at the pretty php/mysql scripts l8ter -->
 <!-- TODO fix this shit index page, & css around everything -->
-<!-- TODO Finish with the magi spreadsheet integration -->
-<!-- TODO Think about how tf will i do the ratings shit what a chore -->
+<!-- TODO Think about how tf will i do the ratings shit what a mess -->
 <h3>just tryina figure out the api go click the button</h3>
 <?php
     echo "<style>
             table, th, td {
                 border: 1px solid black;
             }
+            a{
+                text-decoration: none;
+            }
             </style>";
-    include "SQLSrc/sourcelinks.php";
+    include "SQLSrc/Tools/sourcelinks.php";
 
     if(!ini_set('default_socket_timeout', 15)) echo "<!-- unable to change socket timeout -->";
 

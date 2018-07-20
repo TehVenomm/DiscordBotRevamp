@@ -1,5 +1,5 @@
 <?PHP
-    include "conexao.php";
+    include "../Tools/conexao.php";
     $sql = "DELETE FROM armourtable;
             ALTER TABLE armourtable AUTO_INCREMENT = 1;
             DELETE FROM behemothtable;

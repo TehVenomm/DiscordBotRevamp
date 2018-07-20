@@ -1,5 +1,5 @@
 <?php
-    include "sourcelinks.php";
+    include "../Tools/sourcelinks.php";
     if(!ini_set('default_socket_timeout', 15)) echo "<!-- unable to change socket timeout -->";
 
     if (($handle = fopen($linkWeapon, "r")) !== FALSE) {
@@ -11,7 +11,7 @@
     else
         die("Problem reading csv");
 
-    include "conexao.php";  
+    include "../Tools/conexao.php";  
     $skiphadercounter = 0;  
     foreach($spreadsheet_data as $rowcount){
         if($skiphadercounter > 1){

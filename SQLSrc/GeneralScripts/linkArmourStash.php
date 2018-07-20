@@ -1,5 +1,5 @@
 <?php
-    include "sourcelinks.php";
+    include "../Tools/sourcelinks.php";
     if(!ini_set('default_socket_timeout', 15)) echo "<!-- unable to change socket timeout -->";
 
     if (($handle = fopen($linkArmour, "r")) !== FALSE) {
@@ -11,7 +11,7 @@
     else
         die("Problem reading csv");
 
-    include "conexao.php";  
+    include "../Tools/conexao.php";  
     $skip2rowscounter = 0; 
     $errorCounter = 0; 
     foreach($spreadsheet_data as $rowcount){
@@ -104,6 +104,6 @@
         echo $errorCounter." things went fucky, do it properly you dip = <b>Make sure you run the weapons first</b>";
     
 ?>
-<a href="index.php">
+<a href="../../index.php">
     <input type="button" value="gz ur done">
 </a>

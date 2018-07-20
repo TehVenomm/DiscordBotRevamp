@@ -11,7 +11,7 @@
 
     $linkLightningMagi = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=466948995";
 
-    $lightMagi = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=514467205";
+    $linkLightMagi = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=514467205";
 
     $linkDarkMagi = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1065376842";
 
