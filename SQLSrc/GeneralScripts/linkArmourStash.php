@@ -1,20 +1,9 @@
 <?php
     include "../Tools/sourcelinks.php";
-
-    if(!ini_set('default_socket_timeout', 15)) echo "<!-- unable to change socket timeout -->";
-    if (($handle = fopen($linkArmour, "r")) !== FALSE) 
-    {
-        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
-        {
-            $spreadsheet_data[] = $data;
-        }
-        fclose($handle);
-    }
-    else{
-        die("Problem reading csv");
-    }
-
+    include "../Tools/genericFunctions.php";
     include "../Tools/conexao.php";  
+
+    $spreadsheet_data = grabCSVData($linkArmour);
 
     $skip2rowscounter  = 0; 
     $errorCounter      = 0; 
