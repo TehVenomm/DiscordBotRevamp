@@ -1,5 +1,5 @@
 <?PHP
-
+    //tools
     function removeSpecialChars($stringInput)
     {
         $charsToRemove = array("'", "’");
@@ -31,7 +31,7 @@
         }
         return $obtained_data;
     }
-
+    //specific functions
     function insertMagiDB($CSVData, $MagiTypeString)
     {
         include "conexao.php";
@@ -47,14 +47,14 @@
                     $MagiNameCSV        = removeSpecialChars($rowcount[0]);
                     $MagiCDCSV          = "0";
                     $MagiDescCSV        = $rowcount[4];
-                    $MagiObsCSV         = "";
+                    $MagiobsString         = "";
                 }
                 else
                 {
                     $MagiNameCSV        = removeSpecialChars($rowcount[0]);
                     $MagiCDCSV          = $rowcount[1];
                     $MagiDescCSV        = $rowcount[5];
-                    $MagiObsCSV         = $rowcount[6];
+                    $MagiobsString         = $rowcount[6];
                 }
 
                 $idMagiType = getMagiTypeId($MagiTypeString);
@@ -63,7 +63,7 @@
                 {
                     if(!nameExistsInDB($MagiNameCSV))
                     {
-                        insertMagiInDB($MagiNameCSV, $MagiCDCSV, $MagiDescCSV, $MagiObsCSV, $idMagiType);
+                        insertMagiInDB($MagiNameCSV, $MagiCDCSV, $MagiDescCSV, $MagiobsString, $idMagiType);
                     } 
                     else 
                     {
@@ -79,6 +79,35 @@
         $conex = NULL;
     }
 
+    function weaponBehemothProcedure($spreadsheet_data){
+        $skipHeaderCounter = 0;  
+
+        foreach($spreadsheet_data as $rowcount)
+        {
+            if($skipHeaderCounter > 1)
+            {
+                $behemothName   = $rowcount[0];
+                $typeCSV        = $rowcount[1];
+                $elementCSV     = $rowcount[2];
+                $tierCSV        = $rowcount[3];
+
+                $pAttackCSV     = $rowcount[6];
+                $eAttackCSV     = $rowcount[7];
+
+                $abilityCSV     = $rowcount[11];
+                $obsCSV         = $rowcount[12];
+                
+                if (!empty($abilityCSV))
+                {
+                    $lastWeaponId = insertWeaponInDB($typeCSV, $tierCSV, $elementCSV, $pAttackCSV, $eAttackCSV, $abilityCSV, $obsCSV);
+                    insertBehemothInDB($behemothName, $elementCSV, $lastWeaponId);
+                }
+            }
+            $skipHeaderCounter++;
+        }
+    }
+
+    //specific database functions
     function getMagiTypeId($string){
         include "conexao.php";
 
@@ -139,6 +168,8 @@
 
     function insertMagiInDB($Name, $cooldown, $description, $observation, $idType)
     {
+        include "conexao.php";
+
         $sql             = "INSERT INTO `magitable` VALUES ('', ?, ?, ?, ?, ?)";
         $insertMagiQuery = $conex -> prepare($sql);
 
@@ -149,8 +180,49 @@
         catch (Exception $insertMagiQuery) 
         {
             echo 'Caught exception: ',  $insertMagiQuery->getMessage(), "</br>";
+            $conex = NULL;
             return false;
         }
+
+        $conex = NULL;
+        return true;
+    }
+
+    function insertWeaponInDB($typeString, $tierString, $elementString, $pAttackString, $eAttackString, $abilityString, $obsString)
+    {
+        include "conexao.php";
+
+        $sql = "INSERT INTO `weapontable` VALUES ('', ?, ?, ?, ?, ?, ?, ?)";
+        $insertWeaponQuery = $conex -> prepare($sql);
+
+        try
+        {
+            $insertWeaponQuery -> execute(array($typeString, $tierString, $elementString, $pAttackString, $eAttackString, $abilityString, $obsString));
+        } 
+        catch (Exception $insertWeaponQuery) 
+        {
+            echo 'Caught exception: ',  $insertWeaponQuery->getMessage(), "</br>";
+        }
+
+        $lastWeaponId = $conex->lastInsertId(); 
+        $conex = NULL;
+        return $lastIdFromQuery;
+    }
+
+    function insertBehemothInDB($nameString, $elementString, $weaponID)
+    {
+        $sql = "INSERT IGNORE INTO `behemothtable` VALUES ('', ?, ?, ?)";
+        $weaponQuery = $conex -> prepare($sql);
+
+        try
+        {
+            $weaponQuery -> execute(array($nameString, $elementString, $weaponID));
+        } 
+        catch (Exception $weaponQuery)
+        {
+            echo 'Caught exception: ',  $weaponQuery->getMessage(), "</br>";
+        }
+
         return true;
     }
 ?>
