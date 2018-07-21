@@ -10,6 +10,7 @@
         $armourAbility  = '';
 
         $queryInput = $_POST['query'];
+        
         $queryInput = filterInput($queryInput);
 
         include "../Tools/conexao.php";
@@ -17,13 +18,12 @@
         $sql = "SELECT behemoth.Name, behemoth.Element, weapontable.Type, weapontable.Tier, weapontable.Ability as wepAbility, armourtable.Ability as armourAbility FROM behemothtable as behemoth
         LEFT JOIN weapontable ON weapontable.IdWeapon = behemoth.IdWeapon_BehemothTable
         LEFT JOIN armourtable ON armourtable.IdBehemoth_ArmourTable = behemoth.IdBehemoth
-        WHERE behemoth.name LIKE '?' GROUP BY behemoth.Name";
+        WHERE behemoth.name LIKE ? GROUP BY behemoth.Name";
 
         $query  =   $conex -> prepare($sql);
         $query  ->  execute(array('%'.$queryInput.'%'));
         
         $qty = $query -> rowCount();
-
         if ($qty > 0)
         {
             foreach ($query as $x)
