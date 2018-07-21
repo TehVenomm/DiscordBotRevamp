@@ -1,8 +1,8 @@
-<?php
-	
+<?php	
 	try
 	{
-		if (!headers_sent()) {
+		if (!headers_sent()) 
+		{
 			header('Content-Type: text/html; charset=utf-8');
 		}
 		$conex = new PDO("mysql:host=localhost;dbname=karyu_db;charset=utf8","root","");

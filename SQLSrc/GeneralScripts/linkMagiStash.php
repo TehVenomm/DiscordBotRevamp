@@ -1,5 +1,5 @@
 <?php
-    
+    include "../Tools/genericFunctions.php";
     include "../MagiScripts/FireMagi.php";
     include "../MagiScripts/WaterMagi.php";
     include "../MagiScripts/EarthMagi.php";
@@ -12,37 +12,37 @@
     include "../MagiScripts/PassiveMagi.php";
 
     if (!insertFireMagi())
-        echo "shit in fire magi";
+        echo "Error in fire magi";
 
     if (!insertWaterMagi())
-        echo "shit in Water magi";
+        echo "Error in Water magi";
 
     if (!insertEarthMagi())
-        echo "shit in earth magi";
+        echo "Error in earth magi";
 
     if (!insertLightningMagi())
-        echo "shit in lightning magi";
+        echo "Error in lightning magi";
 
     if (!insertLightMagi())
-        echo "shit in light magi";
+        echo "Error in light magi";
 
     if (!insertDarkMagi())
-        echo "shit in dark magi";
+        echo "Error in dark magi";
 
     if (!insertHybridMagi())
-        echo "shit in hybrid magi";
+        echo "Error in hybrid magi";
 
     if (!insertSupportMagi())
-        echo "shit in support magi";
+        echo "Error in support magi";
 
     if (!insertHealMagi())
-        echo "shit in heal magi";
+        echo "Error in heal magi";
 
     if (!insertPassiveMagi())
-        echo "shit in passive magi";
-
+        echo "Error in passive magi";
     
 ?>
+
 <a href="../../index.php">
     <input type="button" value="gz ur done">
 </a>
