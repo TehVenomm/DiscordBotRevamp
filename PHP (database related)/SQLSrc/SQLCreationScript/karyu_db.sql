@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 19-Jul-2018 às 01:50
+-- Generation Time: 24-Jul-2018 às 02:40
 -- Versão do servidor: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -213,7 +213,7 @@ ALTER TABLE `armourtable`
 -- AUTO_INCREMENT for table `armourtypelist`
 --
 ALTER TABLE `armourtypelist`
-  MODIFY `IdArmourTypeList` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `IdArmourTypeList` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `behemothtable`
