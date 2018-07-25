@@ -13,6 +13,17 @@
         return $fixedString;
     }
 
+    function filterNotObs($stringInput)
+    {
+        $emptyString = "";
+        if (strpos($stringInput, '❈') !== false) {
+            return $stringInput;
+        } 
+        else
+        {
+            return $emptyString;
+        }
+    }
     function grabCSVData($linkString)
     {
         if(!ini_set('default_socket_timeout', 15)) echo "<!-- unable to change socket timeout -->";
@@ -54,8 +65,9 @@
                     $MagiNameCSV        = removeSpecialChars($rowcount[0]);
                     $MagiCDCSV          = $rowcount[1];
                     $MagiDescCSV        = $rowcount[5];
-                    $MagiobsString         = $rowcount[6];
+                    $MagiobsString      = filterNotObs($rowcount[6]);
                 }
+
 
                 $idMagiType = getMagiTypeId($MagiTypeString);
 
@@ -95,7 +107,7 @@
                 $eAttackCSV     = $rowcount[7];
 
                 $abilityCSV     = $rowcount[11];
-                $obsCSV         = $rowcount[12];
+                $obsCSV         = filterNotObs($rowcount[12]);
                 
                 if (!empty($abilityCSV))
                 {
@@ -206,11 +218,13 @@
 
         $lastWeaponId = $conex->lastInsertId(); 
         $conex = NULL;
-        return $lastIdFromQuery;
+        return $lastWeaponId;
     }
 
     function insertBehemothInDB($nameString, $elementString, $weaponID)
     {
+        include "conexao.php";
+        
         $sql = "INSERT IGNORE INTO `behemothtable` VALUES ('', ?, ?, ?)";
         $weaponQuery = $conex -> prepare($sql);
 

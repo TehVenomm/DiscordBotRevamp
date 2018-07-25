@@ -32,7 +32,7 @@
             $pAtkLegsCSV        = $rowcount[18];
 
             $abilityCSV         = $rowcount[20];
-            $obsCSV             = $rowcount[21];
+            $obsCSV             = filterNotObs($rowcount[21]);
 
             //get existing behemoth's id
             $sql = "SELECT idBehemoth FROM behemothtable WHERE behemothtable.Name = ?";

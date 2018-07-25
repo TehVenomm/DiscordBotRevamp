@@ -1,0 +1,202 @@
+Basic query = 
+"SELECT B.Name AS BeheName, B.Element as BeheElement, W.Type AS WepType, W.Tier AS WepTier, W.Ability AS WepAbility, A.Ability AS ArmourAbility FROM behemothtable AS B
+INNER JOIN weapontable AS W ON W.IdWeapon = B.IdWeapon_BehemothTable
+INNER JOIN armourtable AS A ON A.IdBehemoth_ArmourTable = B.IdBehemoth
+WHERE B.Name LIKE '%name%'
+GROUP BY B.IdBehemoth"
+
+--
+{
+  "embed": {
+    "title": "Behemoth Information:",
+    "description": "Fiery Gorynich",
+    "color": 16711680,
+    "thumbnail": {
+      "url": "https://cdn.discordapp.com/embed/avatars/0.png"
+    },
+    "fields": [
+      {
+        "name": "Weapon Type:",
+        "value": "Heat Spear",
+        "inline": true
+      },
+      {
+        "name": "Behemoth Element:",
+        "value": "Fire",
+        "inline": true
+      },
+      {
+        "name": "__Weapon Ability__:",
+        "value": "Fire dmg +40%, Heat gauge speed +20% ❈Only when using Spear"
+      },
+      {
+        "name": "__Armour Ability__:",
+        "value": "Fire dmg +44%, Jump (skyfall) dmg +44% ❈Only when using Spear"
+      }
+    ]
+  }
+}
+--
+embed = discord.Embed(title="Behemoth Information:", colour=discord.Colour(0xff0000), description="Fiery Gorynich")
+
+embed.set_thumbnail(url="https://cdn.discordapp.com/embed/avatars/0.png")
+
+embed.add_field(name="Weapon Type:", value="Heat Spear", inline=True)
+embed.add_field(name="Behemoth Element:", value="Fire", inline=True)
+embed.add_field(name="__Weapon Ability__:", value="Fire dmg +40%, Heat gauge speed +20% ❈Only when using Spear")
+embed.add_field(name="__Armour Ability__:", value="Fire dmg +44%, Jump (skyfall) dmg +44% ❈Only when using Spear")
+
+await bot.say(embed=embed)
+--------------
+
+
+
+
+
+
+
+
+
+
+
+--------------
+
+Weapon Query = 
+"SELECT B.Name AS BeheName, B.Element as BeheElement, W.Type AS WepType, W.Tier AS WepTier, W.PhysAttack AS WepPhysAttack, W.ElemAttack AS WepElemAttack, W.Ability AS WepAbility, W.Obs AS WepObs FROM behemothtable AS B
+INNER JOIN weapontable AS W ON W.IdWeapon = B.IdWeapon_BehemothTable
+WHERE B.Name LIKE '%name%'"
+--
+{
+  "embed": {
+    "title": "Weapon Information:",
+    "description": "Fiery Gorynich",
+    "color": 16711680,
+    "thumbnail": {
+      "url": "https://cdn.discordapp.com/embed/avatars/0.png"
+    },
+    "fields": [
+      {
+        "name": "Weapon Type:",
+        "value": "Heat Spear",
+        "inline": true
+      },
+      {
+        "name": "Behemoth Element:",
+        "value": "Fire",
+        "inline": true
+      },
+      {
+        "name": "Physical Attack:",
+        "value": "540 (+234)",
+        "inline": true
+      },
+      {
+        "name": "Elemental Attack:",
+        "value": "813",
+        "inline": true
+      },
+      {
+        "name": "__Weapon Ability__:",
+        "value": "Fire dmg +40%, Heat gauge speed +20% ❈Only when using Spear"
+      },
+      {
+        "name": "__Observation__:",
+        "value": "N/A"
+      }
+    ]
+  }
+}
+--
+embed = discord.Embed(title="Weapon Information:", colour=discord.Colour(0xff0000), description="Fiery Gorynich")
+
+embed.set_thumbnail(url="https://cdn.discordapp.com/embed/avatars/0.png")
+
+embed.add_field(name="Weapon Type:", value="Heat Spear", inline=True)
+embed.add_field(name="Behemoth Element:", value="Fire", inline=True)
+embed.add_field(name="Physical Attack:", value="540 (+234)", inline=True)
+embed.add_field(name="Elemental Attack:", value="813", inline=True)
+embed.add_field(name="__Weapon Ability__:", value="Fire dmg +40%, Heat gauge speed +20% ❈Only when using Spear")
+embed.add_field(name="__Observation__:", value=" - ")
+
+await bot.say(embed=embed)
+--------------
+
+
+
+
+
+
+
+
+
+
+
+
+--------------
+Armour Query = 
+"SELECT B.Name AS BeheName, A.DefElement AS ArmourElement,AL.Name , A.HpValue AS ArmourHP, A.PhysDef AS ArmourPhyDef, A.ElemDef AS ArmourElemDef, A.PhysAttack AS ArmourPhysAtk, A.Ability AS ArmourAbility, A.Obs AS ArmourObs
+FROM behemothtable AS B
+INNER JOIN armourtable AS A ON A.IdBehemoth_ArmourTable = B.IdBehemoth
+INNER JOIN armourtypelist AS AL ON AL.IdArmourTypeList = A.IdArmourtype_ArmourTable
+WHERE B.Name LIKE '%name%'"
+--
+{
+  "embed": {
+    "color": 16711680,
+    "thumbnail": {
+      "url": "https://cdn.discordapp.com/embed/avatars/0.png"
+    },
+    "fields": [
+      {
+        "name": "Armor Information:",
+        "value": "Fiery Gorynich",
+        "inline": true
+      },
+      {
+        "name": "Elemental Defense:",
+        "value": "Water",
+        "inline": true
+      },
+      {
+        "name": "Helmet:",
+        "value": "HP: 256 (+110)  |  P.Defense: 0  |  E.Defense: 226  |  P.Attack: 0"
+      },
+      {
+        "name": "Chestpiece:",
+        "value": "HP: 0  |  P.Defense: 361 (+155)  |  E.Defense: 243  |  P.Attack: 0"
+      },
+      {
+        "name": "Gloves:",
+        "value": "HP: 69  |  P.Defense: 222 (+95)  |  E.Defense: 208  |  P.Attack: 0"
+      },
+      {
+        "name": "Legs:",
+        "value": "HP: 127  |  P.Defense: 97 (+41)  |  E.Defense: 252  |  P.Attack: 0"
+      },
+      {
+        "name": "__Armour Ability__:",
+        "value": "Fire dmg +44%, Jump (skyfall) dmg +44% ❈Only when using Spear"
+      },
+      {
+        "name": "__Observation__:",
+        "value": "N/A"
+      }
+    ]
+  }
+}
+--
+embed = discord.Embed(colour=discord.Colour(0xff0000))
+
+embed.set_thumbnail(url="https://cdn.discordapp.com/embed/avatars/0.png")
+
+embed.add_field(name="Armor Information:", value="Fiery Gorynich", inline=True)
+embed.add_field(name="Elemental Defense:", value="Water", inline=True)
+embed.add_field(name="Helmet:", value="HP: 256 (+110)  |  P.Defense: 0  |  E.Defense: 226  |  P.Attack: 0")
+embed.add_field(name="Chestpiece:", value="HP: 0  |  P.Defense: 361 (+155)  |  E.Defense: 243  |  P.Attack: 0")
+embed.add_field(name="Gloves:", value="HP: 69  |  P.Defense: 222 (+95)  |  E.Defense: 208  |  P.Attack: 0")
+embed.add_field(name="Legs:", value="HP: 127  |  P.Defense: 97 (+41)  |  E.Defense: 252  |  P.Attack: 0")
+embed.add_field(name="__Armour Ability__:", value="Fire dmg +44%, Jump (skyfall) dmg +44% ❈Only when using Spear")
+embed.add_field(name="__Observation__:", value="N/A")
+
+await bot.say(embed=embed)
+-----------
