@@ -52,7 +52,6 @@
             }
 
             $qty = $behemothQuery->rowCount();
-
             if (!empty($abilityCSV))
             {
                 if($qty != 0)
@@ -61,6 +60,7 @@
                     $armoryHelmet = $conex -> prepare($sql);
                     try
                     {
+                        
                         $armoryHelmet -> execute(array($defElementCSV, $hpHelmetCSV, $eDefHelmetCSV, $abilityCSV, $obsCSV, $idBehemothQuery));
                     } catch (Exception $armoryHelmet) 
                     {

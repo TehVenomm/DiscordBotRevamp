@@ -7,8 +7,6 @@
             ALTER TABLE behemothtable AUTO_INCREMENT = 1;
             DELETE FROM magitable;
             ALTER TABLE magitable AUTO_INCREMENT = 1;
-            DELETE FROM ratingstable;
-            ALTER TABLE ratingstable AUTO_INCREMENT = 1;
             DELETE FROM weapontable;
             ALTER TABLE weapontable AUTO_INCREMENT = 1;";
 

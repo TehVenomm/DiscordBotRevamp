@@ -53,19 +53,30 @@
         {
             if($CSVRowCounter > 1)
             {
+                $MagiHealCSV        = "";
                 if ($MagiTypeString == "Passive")
                 {
                     $MagiNameCSV        = removeSpecialChars($rowcount[0]);
                     $MagiCDCSV          = "0";
                     $MagiDescCSV        = $rowcount[4];
-                    $MagiobsString         = "";
+                    $MagiobsString      = "";
                 }
+                else if ($MagiTypeString == "Heal")
+                {
+                    $MagiNameCSV        = removeSpecialChars($rowcount[0]);
+                    $MagiCDCSV          = $rowcount[1];
+                    $MagiHealCSV        = $rowcount[2];
+                    $MagiDescCSV        = $rowcount[6];
+                    $MagiobsString      = filterNotObs($rowcount[7]);
+                    
+                } 
                 else
                 {
                     $MagiNameCSV        = removeSpecialChars($rowcount[0]);
                     $MagiCDCSV          = $rowcount[1];
                     $MagiDescCSV        = $rowcount[5];
                     $MagiobsString      = filterNotObs($rowcount[6]);
+                    
                 }
 
 
@@ -75,7 +86,7 @@
                 {
                     if(!nameExistsInDB($MagiNameCSV))
                     {
-                        insertMagiInDB($MagiNameCSV, $MagiCDCSV, $MagiDescCSV, $MagiobsString, $idMagiType);
+                        insertMagiInDB($MagiNameCSV, $MagiCDCSV, $MagiDescCSV, $MagiobsString, $idMagiType, $MagiHealCSV);
                     } 
                     else 
                     {
@@ -178,16 +189,16 @@
         }
     }
 
-    function insertMagiInDB($Name, $cooldown, $description, $observation, $idType)
+    function insertMagiInDB($Name, $cooldown, $description, $observation, $idType, $MagiHealCSV)
     {
         include "conexao.php";
 
-        $sql             = "INSERT INTO `magitable` VALUES ('', ?, ?, ?, ?, ?)";
+        $sql             = "INSERT INTO `magitable` VALUES ('', ?, ?, ?, ?, ?, ?)";
         $insertMagiQuery = $conex -> prepare($sql);
 
         try
         {
-            $insertMagiQuery -> execute(array($Name, $cooldown, $description, $observation, $idType));
+            $insertMagiQuery -> execute(array($Name, $cooldown, $MagiHealCSV, $description, $observation, $idType));
         } 
         catch (Exception $insertMagiQuery) 
         {
