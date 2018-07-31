@@ -5,15 +5,6 @@ from discord.ext import commands
 import re
 import secrets
 
-########## EXAMPLE OF getConnection() in secrets.py
-#def getConnection():
-#    connection = pymysql.connect(host='localhost',
-#                                user='username',
-#                                password='password',
-#                                db='database',
-#                                charset='utf8mb4',
-#                                cursorclass=pymysql.cursors.DictCursor)
-#    return connection
 
 def getElementLink(stringInput):
     if (stringInput == "Fire"):
@@ -119,7 +110,7 @@ def fetchMagiDB(name):
     
     try:
         with connection.cursor() as cursor:
-            sql = f"SELECT magitable.Name, magitable.Cooldown, magitable.Cooldown, magitable.HealAmount, magitable.Description, magitable.Obs, magitypelist.Name FROM magitable INNER JOIN magitypelist ON magitypelist.IdMagiType = magitable.IdMagiType_MagiTable WHERE magitable.Name LIKE '%{name}%'"
+            sql = f"SELECT magitable.Name, magitable.Cooldown, magitable.HealAmount, magitable.Description, magitable.Obs, magitypelist.Name FROM magitable INNER JOIN magitypelist ON magitypelist.IdMagiType = magitable.IdMagiType_MagiTable WHERE magitable.Name LIKE '%{name}%'"
             cursor.execute(sql) #this returns the amount of rows affected.
             result = cursor.fetchall()
             return result
@@ -218,12 +209,13 @@ def singleMagiEmbed(magiArray):
     return embed
 
 def magiListEmbed(magiArray):
-    iconImage = fetchIconLinkDB(behemothArmorArray[0]['BeheName'], "DefaultMagi")
-    emojiString = getElementEmoji(behemothArmorArray[0]['ArmorElement'])
-    elementLink = getElementLink(behemothArmorArray[0]['BeheElement'])
+    'Name': 'Cooldown' 'HealAmount' 'Description' 'Obs' 'magitypelist.Name'
+    iconImage = fetchIconLinkDB(behemothArmorArray[0]['Name'], "DefaultMagi")
+    emojiString = getElementEmoji(behemothArmorArray[0]['magitypelist.Name'])
+    elementLink = getElementLink(behemothArmorArray[0]['magitypelist.Name'])
 
-    embed = discord.Embed(colour=discord.Colour(getElementColor(behemothArmorArray[0]['BeheElement'])))
-    embed.add_field(name="Armor Information:", value=f"{behemothArmorArray[0]['BeheName']}", inline=True) 
+    embed = discord.Embed(colour=discord.Colour(getElementColor(behemothArmorArray[0]['magitypelist.Name'])))
+    embed.add_field(name="Magi Information:", value=f"{behemothArmorArray[0]['Name']}", inline=True) 
     embed.add_field(name="Elemental Defense:", value=f"{emojiString} - {behemothArmorArray[0]['ArmorElement']}", inline=True) 
     
     for row in behemothArmorArray:
