@@ -208,25 +208,25 @@ def singleMagiEmbed(magiArray):
 
     return embed
 
-def magiListEmbed(magiArray):
-    'Name': 'Cooldown' 'HealAmount' 'Description' 'Obs' 'magitypelist.Name'
-    iconImage = fetchIconLinkDB(behemothArmorArray[0]['Name'], "DefaultMagi")
-    emojiString = getElementEmoji(behemothArmorArray[0]['magitypelist.Name'])
-    elementLink = getElementLink(behemothArmorArray[0]['magitypelist.Name'])
+#def magiListEmbed(magiArray):
+#    'Name': 'Cooldown' 'HealAmount' 'Description' 'Obs' 'magitypelist.Name'
+#    iconImage = fetchIconLinkDB(behemothArmorArray[0]['Name'], "DefaultMagi")
+#    emojiString = getElementEmoji(behemothArmorArray[0]['magitypelist.Name'])
+#    elementLink = getElementLink(behemothArmorArray[0]['magitypelist.Name'])
 
-    embed = discord.Embed(colour=discord.Colour(getElementColor(behemothArmorArray[0]['magitypelist.Name'])))
-    embed.add_field(name="Magi Information:", value=f"{behemothArmorArray[0]['Name']}", inline=True) 
-    embed.add_field(name="Elemental Defense:", value=f"{emojiString} - {behemothArmorArray[0]['ArmorElement']}", inline=True) 
+#    embed = discord.Embed(colour=discord.Colour(getElementColor(behemothArmorArray[0]['magitypelist.Name'])))
+#    embed.add_field(name="Magi Information:", value=f"{behemothArmorArray[0]['Name']}", inline=True) 
+#    embed.add_field(name="Elemental Defense:", value=f"{emojiString} - {behemothArmorArray[0]['ArmorElement']}", inline=True) 
     
-    for row in behemothArmorArray:
-        embed.add_field(name=f"{row['ArmorType']}:", value=f"HP: {row['ArmorHP']}  **|**  P.Defense: {row['ArmorPDef']}  **|**  E.Defense: {row['ArmorEDef']}  **|**  P.Attack: {row['ArmorPAtk']}")
+#    for row in behemothArmorArray:
+#        embed.add_field(name=f"{row['ArmorType']}:", value=f"HP: {row['ArmorHP']}  **|**  P.Defense: {row['ArmorPDef']}  **|**  E.Defense: {row['ArmorEDef']}  **|**  P.Attack: {row['ArmorPAtk']}")
 
-    embed.add_field(name="__Armour Ability__: (Perfect Roll)", value=f"{behemothArmorArray[0]['ArmorAbility']}")
+#    embed.add_field(name="__Armour Ability__: (Perfect Roll)", value=f"{behemothArmorArray[0]['ArmorAbility']}")
 
-    if (behemothArmorArray[0]['ArmorObs'] != ''):
-        embed.add_field(name="__Observation__:", value=f"{behemothArmorArray[0]['ArmorObs']}")
+#    if (behemothArmorArray[0]['ArmorObs'] != ''):
+#        embed.add_field(name="__Observation__:", value=f"{behemothArmorArray[0]['ArmorObs']}")
         
-    embed.set_footer(text="SS Behemoth", icon_url=f"{elementLink}")
-    embed.set_thumbnail(url=f"{iconImage}")
+#    embed.set_footer(text="SS Behemoth", icon_url=f"{elementLink}")
+#    embed.set_thumbnail(url=f"{iconImage}")
 
-    return embed
+#    return embed
