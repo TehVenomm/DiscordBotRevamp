@@ -54,16 +54,12 @@ async def magi(ctx, *a):
     joined = " ".join(a)
     filteredInput = myUtilities.filterInput(joined)
     queryResults = myUtilities.fetchMagiDB(filteredInput)
-    await ctx.send(queryResults)
-    
-#    if (len(queryResults) == 1):
-#        embed = myUtilities.MagiEmbed(queryResults)
-#        await ctx.send(embed=embed)
-#    elif (len(queryResults) >= 1):
-#        embed = myUtilities.ListMagiEmbed(queryResults)
-#        await ctx.send(embed=embed)
-#    elif (len(queryResults) == 0):
-#        await ctx.send("Magi not found.")
+
+    if (len(queryResults) > 0 and len(queryResults) <= 10):
+        embed = myUtilities.magiEmbedGenerator(queryResults, filteredInput)
+        await ctx.send(embed=embed)
+    else:
+        await ctx.send("Magi not found.")
     
 @armor.error
 async def armor_on_error(ctx, error):
@@ -86,5 +82,11 @@ async def behemoth_on_error(ctx, error):
         await ctx.send(embed=embed)
     raise error
 
+@magi.error
+async def magi_on_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(title="The correct syntax is:", colour=discord.Colour(0xff0000), description="`?magi [Magi's name]`")
+        await ctx.send(embed=embed)
+    raise error
 
 bot.run(secrets.getToken())

@@ -8,22 +8,37 @@ import secrets
 
 def getElementLink(stringInput):
     if (stringInput == "Fire"):
-        return "https://media.discordapp.net/attachments/456208112790142977/472561214317395988/FireSmall.png" 
+        return "https://media.discordapp.net/attachments/456208112790142977/472561214317395988/FireSmall.png" #old img, replace with the round icons
 
     if (stringInput == "Earth"):
-        return "https://media.discordapp.net/attachments/456208112790142977/472561213281402880/EarthSmall.png" 
+        return "https://media.discordapp.net/attachments/456208112790142977/472561213281402880/EarthSmall.png" #old img, replace with the round icons
 
     if (stringInput == "Lightning"):
-        return "https://media.discordapp.net/attachments/456208112790142977/472561215277629471/LightningSmall.png"
+        return "https://media.discordapp.net/attachments/456208112790142977/472561215277629471/LightningSmall.png"#old img, replace with the round icons
 
     if (stringInput == "Water"):
-        return "https://media.discordapp.net/attachments/456208112790142977/472561217764982804/WaterSmall.png"
+        return "https://media.discordapp.net/attachments/456208112790142977/472561217764982804/WaterSmall.png"#old img, replace with the round icons
 
     if (stringInput == "Light (Holy)" or stringInput == "Light" or stringInput == "Holy"):
-        return "https://media.discordapp.net/attachments/456208112790142977/472561216670138368/LightSmall.png"
+        return "https://media.discordapp.net/attachments/456208112790142977/472561216670138368/LightSmall.png"#old img, replace with the round icons
 
     if (stringInput == "Dark"):
-        return "https://media.discordapp.net/attachments/456208112790142977/472561218855370775/DarkSmall.png"
+        return "https://media.discordapp.net/attachments/456208112790142977/472561218855370775/DarkSmall.png"#old img, replace with the round icons
+
+    if (stringInput == "Hybrid"):
+        return "https://media.discordapp.net/attachments/456208112790142977/498370434912485406/IIC_90000001.png"
+
+    if (stringInput == "Support"):
+        return "https://media.discordapp.net/attachments/456208112790142977/498370436866899969/IIC_90000002.png"
+
+    if (stringInput == "Heal"):
+        return "https://media.discordapp.net/attachments/456208112790142977/498370439219904512/IIC_90000003.png"
+
+    if (stringInput == "Passive"):
+        return "https://media.discordapp.net/attachments/456208112790142977/498370434744582144/IIC_90000004.png"
+
+    if (stringInput == "List"):
+        return "https://media.discordapp.net/attachments/456208112790142977/471391949572800514/SS.png"
 
 def getElementEmoji(stringInput):
     if (stringInput == "Fire"):
@@ -62,6 +77,21 @@ def getElementColor(stringInput):
 
     if (stringInput == "Dark"):
         return 0x9013FE
+
+    if (stringInput == "Hybrid"):
+        return 0x000000
+
+    if (stringInput == "Support"):
+        return 0x00ffff
+
+    if (stringInput == "Heal"):
+        return 0x00ff00
+
+    if (stringInput == "Passive"):
+        return 0xffe599
+    
+    if (stringInput == "List"):
+        return 0x8e8e8e
 
 def filterInput(inputString):
     newString = re.sub('[^A-Za-z0-9\s]+', '', inputString)
@@ -168,8 +198,7 @@ def armorEmbed(behemothArmorArray):
     emojiString = getElementEmoji(behemothArmorArray[0]['ArmorElement'])
     elementLink = getElementLink(behemothArmorArray[0]['BeheElement'])
 
-    embed = discord.Embed(colour=discord.Colour(getElementColor(behemothArmorArray[0]['BeheElement'])))
-    embed.add_field(name="Armor Information:", value=f"{behemothArmorArray[0]['BeheName']}", inline=True) 
+    embed = discord.Embed(title="Armor Information:", colour=discord.Colour(getElementColor(behemothArmorArray[0]['BeheElement'])), description=f"{behemothArmorArray[0]['BeheName']}") 
     embed.add_field(name="Elemental Defense:", value=f"{emojiString}", inline=True) 
     
     for row in behemothArmorArray:
@@ -185,48 +214,51 @@ def armorEmbed(behemothArmorArray):
 
     return embed
 
+def magiEmbedGenerator(magiArray, inputString):
+    if (len(magiArray) == 1):
+        embed = singleMagiEmbed(magiArray)
+        return embed
+    else:
+        embed = magiListEmbed(magiArray, inputString)
+    return embed
+
+    
 
 def singleMagiEmbed(magiArray):
-    iconImage = fetchIconLinkDB(behemothArmorArray[0]['BeheName'], "DefaultMagi")
-    emojiString = getElementEmoji(behemothArmorArray[0]['ArmorElement'])
-    elementLink = getElementLink(behemothArmorArray[0]['BeheElement'])
+    iconImage = fetchIconLinkDB(magiArray[0]['Name'], "DefaultMagi")
+    elementLink = getElementLink(magiArray[0]['magitypelist.Name'])
 
-    embed = discord.Embed(colour=discord.Colour(getElementColor(behemothArmorArray[0]['BeheElement'])))
-    embed.add_field(name="Armor Information:", value=f"{behemothArmorArray[0]['BeheName']}", inline=True) 
-    embed.add_field(name="Elemental Defense:", value=f"{emojiString} - {behemothArmorArray[0]['ArmorElement']}", inline=True) 
-    
-    for row in behemothArmorArray:
-        embed.add_field(name=f"{row['ArmorType']}:", value=f"HP: {row['ArmorHP']}  **|**  P.Defense: {row['ArmorPDef']}  **|**  E.Defense: {row['ArmorEDef']}  **|**  P.Attack: {row['ArmorPAtk']}")
+    embed = discord.Embed(colour=discord.Colour(getElementColor(magiArray[0]['magitypelist.Name'])))
+    embed.add_field(name="Magi Information:", value=f"{magiArray[0]['Name']}", inline=True)
 
-    embed.add_field(name="__Armour Ability__: (Perfect Roll)", value=f"{behemothArmorArray[0]['ArmorAbility']}")
+    if (magiArray[0]['magitypelist.Name'] != 'Passive'):
+        embed.add_field(name="Cooldown:", value=f"{magiArray[0]['Cooldown']}", inline=True)
+    if (magiArray[0]['magitypelist.Name'] == 'Heal'):
+        embed.add_field(name="Heal Amount:", value=f"{magiArray[0]['HealAmount']}", inline=True)
 
-    if (behemothArmorArray[0]['ArmorObs'] != ''):
-        embed.add_field(name="__Observation__:", value=f"{behemothArmorArray[0]['ArmorObs']}")
+    embed.add_field(name="Description", value=f"{magiArray[0]['Description']}")
+
+    if (magiArray[0]['Obs'] != ''):
+        embed.add_field(name="__Observation__:", value=f"{magiArray[0]['Obs']}")
+
+    embed.add_field(name="Magi Type:", value=f"{magiArray[0]['magitypelist.Name']}", inline=True)
         
-    embed.set_footer(text="SS Behemoth", icon_url=f"{elementLink}")
-    embed.set_thumbnail(url=f"{iconImage}")
+    embed.set_footer(text="SS Magi", icon_url=f"{elementLink}") 
+    embed.set_thumbnail(url=f"{iconImage}")                     
 
     return embed
 
-#def magiListEmbed(magiArray):
-#    'Name': 'Cooldown' 'HealAmount' 'Description' 'Obs' 'magitypelist.Name'
-#    iconImage = fetchIconLinkDB(behemothArmorArray[0]['Name'], "DefaultMagi")
-#    emojiString = getElementEmoji(behemothArmorArray[0]['magitypelist.Name'])
-#    elementLink = getElementLink(behemothArmorArray[0]['magitypelist.Name'])
+def magiListEmbed(magiArray, userSearch):
+    iconImage = fetchIconLinkDB("", "DefaultMagi")
+    elementLink = getElementLink('List')
 
-#    embed = discord.Embed(colour=discord.Colour(getElementColor(behemothArmorArray[0]['magitypelist.Name'])))
-#    embed.add_field(name="Magi Information:", value=f"{behemothArmorArray[0]['Name']}", inline=True) 
-#    embed.add_field(name="Elemental Defense:", value=f"{emojiString} - {behemothArmorArray[0]['ArmorElement']}", inline=True) 
-    
-#    for row in behemothArmorArray:
-#        embed.add_field(name=f"{row['ArmorType']}:", value=f"HP: {row['ArmorHP']}  **|**  P.Defense: {row['ArmorPDef']}  **|**  E.Defense: {row['ArmorEDef']}  **|**  P.Attack: {row['ArmorPAtk']}")
+    embed = discord.Embed(colour=discord.Colour(getElementColor('List')))
+    embed.add_field(name="Information:", value="The following magi match your request, input a complete name for specific information:", )
 
-#    embed.add_field(name="__Armour Ability__: (Perfect Roll)", value=f"{behemothArmorArray[0]['ArmorAbility']}")
-
-#    if (behemothArmorArray[0]['ArmorObs'] != ''):
-#        embed.add_field(name="__Observation__:", value=f"{behemothArmorArray[0]['ArmorObs']}")
+    for idx, line in enumerate(magiArray, start=1):
+        embed.add_field(name=f"{idx}º Magi - Name: ", value=f"   \"{line['Name']}\" - **Type**: {line['magitypelist.Name']} magi")
         
-#    embed.set_footer(text="SS Behemoth", icon_url=f"{elementLink}")
-#    embed.set_thumbnail(url=f"{iconImage}")
+    embed.set_footer(text=f"You searched for: {userSearch}", icon_url=f"{elementLink}")
+    embed.set_thumbnail(url=f"{iconImage}")                    
 
-#    return embed
+    return embed
