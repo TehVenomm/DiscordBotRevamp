@@ -146,8 +146,8 @@ INSERT INTO `icontable` (`idIcon`, `behemothName`, `imageLink`) VALUES
 CREATE TABLE `magitable` (
   `IdMagi` int(11) NOT NULL,
   `Name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `Cooldown` int(11) NOT NULL,
-  `HealAmount` int(11) NOT NULL,
+  `Cooldown` varchar(50) NOT NULL,
+  `HealAmount` varchar(50) NOT NULL,
   `Description` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `Obs` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `IdMagiType_MagiTable` int(11) NOT NULL
