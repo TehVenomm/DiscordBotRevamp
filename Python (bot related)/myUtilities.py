@@ -42,22 +42,22 @@ def getElementLink(stringInput):
 
 def getElementEmoji(stringInput):
     if (stringInput == "Fire"):
-        return f"<:Fire:472523665292918796> - {stringInput}" 
+        return f"<:Fire:492102021911019521> - {stringInput}" 
 
     if (stringInput == "Earth"):
-        return f"<:Earth:472523665280466959> - {stringInput}" 
+        return f"<:Earth:492101844148027412> - {stringInput}" 
 
     if (stringInput == "Lightning"):
-        return f"<:Lightning:472523665586782239> - {stringInput}"
+        return f"<:Lightning:492102153348055043> - {stringInput}"
 
     if (stringInput == "Water"):
-        return f"<:Water:472523665406165023> - {stringInput}"
+        return f"<:Water:492102291092930560> - {stringInput}"
 
     if (stringInput == "Light (Holy)" or stringInput == "Light" or stringInput == "Holy"):
-        return f"<:LightHoly:472523665586651166> - {stringInput}"
+        return f"<:LightHoly:492101364998995968> - {stringInput}"
 
     if (stringInput == "Dark"):
-        return f"<:Dark:472523665616011266> - {stringInput}"
+        return f"<:Dark:492101704167194625> - {stringInput}"
 
 def getElementColor(stringInput):
     if (stringInput == "Fire"):
@@ -215,11 +215,18 @@ def armorEmbed(behemothArmorArray):
     return embed
 
 def magiEmbedGenerator(magiArray, inputString):
+	isExactMatch = false
+	
     if (len(magiArray) == 1):
         embed = singleMagiEmbed(magiArray)
-        return embed
     else:
-        embed = magiListEmbed(magiArray, inputString)
+		for row in magiArray:
+			if inputString == row['Name']:
+				embed = singleMagiEmbed(magiArray)
+				isExactMatch = true
+		if isExactMatch == false:
+			embed = magiListEmbed(magiArray, inputString)
+			
     return embed
 
     
@@ -256,7 +263,7 @@ def magiListEmbed(magiArray, userSearch):
     embed.add_field(name="Information:", value="The following magi match your request, input a complete name for specific information:", )
 
     for idx, line in enumerate(magiArray, start=1):
-        embed.add_field(name=f"{idx}º Magi - Name: ", value=f"   \"{line['Name']}\" - **Type**: {line['magitypelist.Name']} magi")
+        embed.add_field(name=f"{idx} Magi - Name: ", value=f"   \"{line['Name']}\" - **Type**: {line['magitypelist.Name']} magi")
         
     embed.set_footer(text=f"You searched for: {userSearch}", icon_url=f"{elementLink}")
     embed.set_thumbnail(url=f"{iconImage}")                    
