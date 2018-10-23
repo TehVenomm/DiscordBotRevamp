@@ -8,22 +8,22 @@ import secrets
 
 def getElementLink(stringInput):
     if (stringInput == "Fire"):
-        return "https://media.discordapp.net/attachments/456208112790142977/472561214317395988/FireSmall.png" #old img, replace with the round icons
+        return "https://cdn.discordapp.com/attachments/470712762314784799/504091443242205184/fire.png" #old img, replace with the round icons
 
     if (stringInput == "Earth"):
-        return "https://media.discordapp.net/attachments/456208112790142977/472561213281402880/EarthSmall.png" #old img, replace with the round icons
+        return "https://cdn.discordapp.com/attachments/470712762314784799/504091441908154369/earth.png" #old img, replace with the round icons
 
     if (stringInput == "Lightning"):
-        return "https://media.discordapp.net/attachments/456208112790142977/472561215277629471/LightningSmall.png"#old img, replace with the round icons
+        return "https://cdn.discordapp.com/attachments/470712762314784799/504091445825765386/lightning.png"#old img, replace with the round icons
 
     if (stringInput == "Water"):
-        return "https://media.discordapp.net/attachments/456208112790142977/472561217764982804/WaterSmall.png"#old img, replace with the round icons
+        return "https://cdn.discordapp.com/attachments/470712762314784799/504091447809540126/water.png"#old img, replace with the round icons
 
     if (stringInput == "Light (Holy)" or stringInput == "Light" or stringInput == "Holy"):
-        return "https://media.discordapp.net/attachments/456208112790142977/472561216670138368/LightSmall.png"#old img, replace with the round icons
+        return "https://cdn.discordapp.com/attachments/470712762314784799/504091444085129236/light.png"#old img, replace with the round icons
 
     if (stringInput == "Dark"):
-        return "https://media.discordapp.net/attachments/456208112790142977/472561218855370775/DarkSmall.png"#old img, replace with the round icons
+        return "https://cdn.discordapp.com/attachments/470712762314784799/504091435327422464/dark.png"#old img, replace with the round icons
 
     if (stringInput == "Hybrid"):
         return "https://media.discordapp.net/attachments/456208112790142977/498370434912485406/IIC_90000001.png"
@@ -215,18 +215,17 @@ def armorEmbed(behemothArmorArray):
     return embed
 
 def magiEmbedGenerator(magiArray, inputString):
-	isExactMatch = false
-	
+    isExactMatch = False
     if (len(magiArray) == 1):
         embed = singleMagiEmbed(magiArray)
     else:
-		for row in magiArray:
-			if inputString == row['Name']:
-				embed = singleMagiEmbed(magiArray)
-				isExactMatch = true
-		if isExactMatch == false:
-			embed = magiListEmbed(magiArray, inputString)
-			
+        for row in magiArray:
+            if inputString.lower() == row['Name'].lower():
+                embed = singleMagiEmbed(magiArray)
+                isExactMatch = True
+        if isExactMatch == False:
+            embed = magiListEmbed(magiArray, inputString)
+                
     return embed
 
     
