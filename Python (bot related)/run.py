@@ -14,12 +14,23 @@ async def on_ready():
 
 @bot.command()
 async def behemoth(ctx, *a):
+    i = 0
     joinedInput = " ".join(a)
     filteredInput = myUtilities.filterInput(joinedInput)
-    queryResults = myUtilities.fetchBehemothDB(filteredInput)
+    inputWordArray = filteredInput.split()
 
-    if (len(queryResults) == 1):
-        embed = myUtilities.behemothEmbed(queryResults)
+    attributesArray = myUtilities.matchWeaponAttributes(inputWordArray)
+    for key, content in attributesArray.items():
+        if (content):
+            i+=1
+
+    if (i > 1):
+        queryResults = myUtilities.fetchBehemothByTypeDB(attributesArray)
+    else:
+        queryResults = myUtilities.fetchBehemothDB(filteredInput)
+
+    if (len(queryResults) > 0 and len(queryResults) <= 10):
+        embed = myUtilities.behemothEmbedGenerator(queryResults, filteredInput)
         await ctx.send(embed=embed)
     else:
         await ctx.send("Behemoth not found.")

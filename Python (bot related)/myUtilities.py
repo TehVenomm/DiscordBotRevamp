@@ -4,6 +4,7 @@ import discord
 from discord.ext import commands
 import re
 import secrets
+import collections
 
 
 def getElementLink(stringInput):
@@ -93,10 +94,115 @@ def getElementColor(stringInput):
     if (stringInput == "List"):
         return 0x8e8e8e
 
+def getWeaponElement(stringInput):
+    stringInputLower = stringInput.lower()
+    returnString = ""
+
+    if (len(stringInput) >= 4):
+        if (stringInputLower == "fire"):
+            returnString = "Fire"
+
+        if (stringInputLower == "earth"):
+            returnString = "Earth"
+
+        if (stringInputLower == "lightning"):
+            returnString = "Lightning"
+
+        if (stringInputLower == "water"):
+            returnString = "Water"
+
+        if (stringInputLower == "light"):
+            returnString = "Light"
+
+        if (stringInputLower == "dark"):
+            returnString = "Dark"
+
+    return returnString
+
+def getWeaponClass(stringInput):
+    stringInputLower = stringInput.lower()
+    returnString = ""
+    if (len(stringInput) >= 2):
+        if (stringInputLower in "shield" or stringInput in "& shield" or stringInput in "sns"):
+            returnString = "Sword & Shield"
+
+        if (stringInputLower in "great" or stringInputLower in "gs"):
+            returnString = "Great Sword"
+
+        if (stringInputLower in "spear"):
+            returnString = "Spear"
+
+        if (stringInputLower in "dual" or stringInputLower in "dbs"):
+            returnString = "Dual Blades"
+
+        if (stringInputLower in "bow"):
+            returnString = "Bow"
+        
+    return returnString
+
+def getWeaponType(stringInput):
+    stringInputLower = stringInput.lower()
+    returnString = ""
+    if (len(stringInput) >= 4):
+        if (stringInputLower == "normal"):
+            returnString = "Normal"
+
+        if (stringInputLower == "astral"):
+            returnString = "Astral"
+
+        if (stringInputLower == "heat"):
+            returnString = "Heat"
+
+        if (stringInputLower == "soul"):
+            returnString = "Soul"
+
+        if (stringInputLower == "burst"):
+            returnString = "Burst"
+        
+        if (stringInputLower == "oracle"):
+            returnString = "Oracle"
+
+    return returnString
+
 def filterInput(inputString):
     newString = re.sub('[^A-Za-z0-9\s]+', '', inputString)
 
     return newString
+
+def matchWeaponAttributes(inputWordArray):
+    elementArray = []
+    typeArray    = []
+    classArray   = []
+
+    for row in inputWordArray:
+        if (getWeaponElement(row)):
+            elementArray.append(getWeaponElement(row))
+        if (getWeaponType(row)):  
+            typeArray.append(getWeaponType(row))
+        if (getWeaponClass(row)):  
+            classArray.append(getWeaponClass(row)) 
+
+    elementArrayFiltered = list(set(elementArray))
+    typeArrayFiltered = list(set(typeArray))
+    classArrayFiltered = list(set(classArray))
+    
+    if (len(elementArrayFiltered) == 1):
+        elementString = elementArrayFiltered[0]
+    else:
+        elementString = ""
+
+    if (len(typeArrayFiltered) == 1):
+        typeString = typeArrayFiltered[0]
+    else:
+        typeString = ""
+
+    if (len(classArrayFiltered) == 1):
+        classString = classArrayFiltered[0]
+    else:
+        classString = ""
+    
+    returnDict = {"Element" : elementString, "Type" : typeString, "Class" : classString}
+    return returnDict
 
 def fetchBehemothDB(name):
     connection = secrets.getConnection()
@@ -104,7 +210,7 @@ def fetchBehemothDB(name):
     try:
         with connection.cursor() as cursor:
             sql = f"SELECT B.Name AS BeheName, B.Element as BeheElement, W.Type AS WepType, W.Tier AS WepTier, W.Ability AS WepAbility, A.Ability AS ArmourAbility FROM behemothtable AS B INNER JOIN weapontable AS W ON W.IdWeapon = B.IdWeapon_BehemothTable INNER JOIN armourtable AS A ON A.IdBehemoth_ArmourTable = B.IdBehemoth WHERE B.Name LIKE '%{name}%' GROUP BY B.IdBehemoth"
-            cursor.execute(sql) #this returns the amount of rows affected.
+            cursor.execute(sql) 
             result = cursor.fetchall()
 
             return result
@@ -117,7 +223,7 @@ def fetchWeaponDB(name):
     try:
         with connection.cursor() as cursor:
             sql = f"SELECT behemothtable.Name, behemothtable.Element, weapontable.Type, weapontable.Tier, weapontable.PhysAttack, weapontable.ElemAttack, weapontable.Ability, weapontable.Obs FROM behemothtable INNER JOIN weapontable ON weapontable.IdWeapon = behemothtable.IdWeapon_BehemothTable WHERE behemothtable.Name LIKE '%{name}%'"
-            cursor.execute(sql) #this returns the amount of rows affected.
+            cursor.execute(sql)
             result = cursor.fetchall()
             return result
     finally:
@@ -129,7 +235,7 @@ def fetchArmorDB(name):
     try:
         with connection.cursor() as cursor:
             sql = f"SELECT behemothtable.Name AS BeheName, behemothtable.Element AS BeheElement, armourtable.DefElement AS ArmorElement, armourtable.HpValue AS ArmorHP, armourtable.PhysDef AS ArmorPDef, armourtable.ElemDef AS ArmorEDef, armourtable.PhysAttack AS ArmorPAtk, armourtypelist.Name AS ArmorType, armourtable.Ability AS ArmorAbility, armourtable.Obs AS ArmorObs FROM behemothtable LEFT JOIN armourtable ON armourtable.IdBehemoth_ArmourTable = behemothtable.IdBehemoth LEFT JOIN armourtypelist ON armourtypelist.IdArmourTypeList = armourtable.IdArmourtype_ArmourTable WHERE behemothtable.Name LIKE '%{name}%'"
-            cursor.execute(sql) #this returns the amount of rows affected.
+            cursor.execute(sql) 
             result = cursor.fetchall()
             return result
     finally:
@@ -152,27 +258,28 @@ def fetchIconLinkDB(beheName, default):
     try:
         with connection.cursor() as cursor:
             sql = f"(SELECT imageLink FROM icontable WHERE behemothName = '{beheName}') UNION (SELECT imageLink FROM icontable WHERE behemothName = '{default}') LIMIT 1"
-            cursor.execute(sql) #this returns the amount of rows affected.
+            cursor.execute(sql) 
             result = cursor.fetchall()
             return result[0]['imageLink']
     finally:
         connection.close()
 
-def behemothEmbed(behemothArray):
-    elementLink = getElementLink(behemothArray[0]['BeheElement'])
-    iconImage = fetchIconLinkDB(behemothArray[0]['BeheName'], "DefaultMonster")
+def fetchBehemothByTypeDB(attributesArray):
+    connection = secrets.getConnection()
+    try:
+        with connection.cursor() as cursor:
+            sql = f"SELECT B.Name AS BeheName, B.Element as BeheElement, W.Type AS WepType, W.Tier AS WepTier, W.Ability AS WepAbility, A.Ability AS ArmourAbility FROM behemothtable AS B INNER JOIN weapontable AS W ON W.IdWeapon = B.IdWeapon_BehemothTable INNER JOIN armourtable AS A ON A.IdBehemoth_ArmourTable = B.IdBehemoth WHERE W.Type LIKE '%{attributesArray['Class']}%' AND W.Tier LIKE '%{attributesArray['Type']}%' "
+            
+            if (attributesArray['Element']):
+                sql += f"AND B.Element = '{attributesArray['Element']}' GROUP BY B.IdBehemoth"
+            else: 
+                sql += f"AND B.Element LIKE '%%' GROUP BY B.IdBehemoth"
 
-    embed = discord.Embed(title="Behemoth Information:", colour=discord.Colour(getElementColor(behemothArray[0]['BeheElement'])), description=f"{behemothArray[0]['BeheName']}")
-    embed.set_footer(text="SS Behemoth", icon_url=f"{elementLink}")
-    embed.set_thumbnail(url=f"{iconImage}")
-    
-    embed.add_field(name="Weapon Type:", value=f"{behemothArray[0]['WepTier']} {behemothArray[0]['WepType']}", inline=True)
-    embed.add_field(name="Behemoth Element:", value=f"{behemothArray[0]['BeheElement']}", inline=True)
-    embed.add_field(name="__Weapon Ability__: (Perfect Roll)", value=f"{behemothArray[0]['WepAbility']}")
-    embed.add_field(name="__Armour Ability__: (Perfect Roll)", value=f"{behemothArray[0]['ArmourAbility']}")
-
-    return embed
-
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            return result
+    finally:
+        connection.close()
 
 def weaponEmbed(behemothWeaponArray):
     elementLink = getElementLink(behemothWeaponArray[0]['Element'])
@@ -228,7 +335,14 @@ def magiEmbedGenerator(magiArray, inputString):
                 
     return embed
 
-    
+def behemothEmbedGenerator(behemothArray, inputString):
+    print(len(behemothArray))
+    if (len(behemothArray) == 1):
+        embed = singleBehemothEmbed(behemothArray)
+    else:
+        embed = behemothListEmbed(behemothArray, inputString)
+          
+    return embed
 
 def singleMagiEmbed(magiArray):
     iconImage = fetchIconLinkDB(magiArray[0]['Name'], "DefaultMagi")
@@ -262,7 +376,37 @@ def magiListEmbed(magiArray, userSearch):
     embed.add_field(name="Information:", value="The following magi match your request, input a complete name for specific information:", )
 
     for idx, line in enumerate(magiArray, start=1):
-        embed.add_field(name=f"{idx} Magi - Name: ", value=f"   \"{line['Name']}\" - **Type**: {line['magitypelist.Name']} magi")
+        embed.add_field(name=f"{idx} - Magi's Name: ", value=f"   \"{line['Name']}\" - **Type**: {line['magitypelist.Name']} magi")
+        
+    embed.set_footer(text=f"You searched for: {userSearch}", icon_url=f"{elementLink}")
+    embed.set_thumbnail(url=f"{iconImage}")                    
+
+    return embed
+
+def singleBehemothEmbed(behemothArray):
+    elementLink = getElementLink(behemothArray[0]['BeheElement'])
+    iconImage = fetchIconLinkDB(behemothArray[0]['BeheName'], "DefaultMonster")
+
+    embed = discord.Embed(title="Behemoth Information:", colour=discord.Colour(getElementColor(behemothArray[0]['BeheElement'])), description=f"{behemothArray[0]['BeheName']}")
+    embed.set_footer(text="SS Behemoth", icon_url=f"{elementLink}")
+    embed.set_thumbnail(url=f"{iconImage}")
+    
+    embed.add_field(name="Weapon Type:", value=f"{behemothArray[0]['WepTier']} {behemothArray[0]['WepType']}", inline=True)
+    embed.add_field(name="Behemoth Element:", value=f"{behemothArray[0]['BeheElement']}", inline=True)
+    embed.add_field(name="__Weapon Ability__: (Perfect Roll)", value=f"{behemothArray[0]['WepAbility']}")
+    embed.add_field(name="__Armour Ability__: (Perfect Roll)", value=f"{behemothArray[0]['ArmourAbility']}")
+
+    return embed
+
+def behemothListEmbed(behemothArray, userSearch):
+    iconImage = fetchIconLinkDB("", "DefaultMonster")
+    elementLink = getElementLink('List')
+
+    embed = discord.Embed(colour=discord.Colour(getElementColor('List')))
+    embed.add_field(name="Information:", value="The following behemoths match your request, input a complete name for specific information:", )
+
+    for idx, line in enumerate(behemothArray, start=1):
+        embed.add_field(name=f"{idx} - Behemoth's Name: ", value=f"   \"{line['BeheName']}\" - **Weapon Type**: {line['BeheElement']} {line['WepTier']} {line['WepType']}")
         
     embed.set_footer(text=f"You searched for: {userSearch}", icon_url=f"{elementLink}")
     embed.set_thumbnail(url=f"{iconImage}")                    
