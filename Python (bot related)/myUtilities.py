@@ -43,22 +43,22 @@ def getElementLink(stringInput):
 
 def getElementEmoji(stringInput):
     if (stringInput == "Fire"):
-        return f"<:Fire:492102021911019521> - {stringInput}" 
+        return f"<a:Fire:492102021911019521> - {stringInput}" 
 
     if (stringInput == "Earth"):
-        return f"<:Earth:492101844148027412> - {stringInput}" 
+        return f"<a:Earth:492101844148027412> - {stringInput}" 
 
     if (stringInput == "Lightning"):
-        return f"<:Lightning:492102153348055043> - {stringInput}"
+        return f"<a:Lightning:492102153348055043> - {stringInput}"
 
     if (stringInput == "Water"):
-        return f"<:Water:492102291092930560> - {stringInput}"
+        return f"<a:Water:492102291092930560> - {stringInput}"
 
     if (stringInput == "Light (Holy)" or stringInput == "Light" or stringInput == "Holy"):
-        return f"<:LightHoly:492101364998995968> - {stringInput}"
+        return f"<a:LightHoly:492101364998995968> - {stringInput}"
 
     if (stringInput == "Dark"):
-        return f"<:Dark:492101704167194625> - {stringInput}"
+        return f"<a:Dark:492101704167194625> - {stringInput}"
 
 def getElementColor(stringInput):
     if (stringInput == "Fire"):
