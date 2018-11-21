@@ -8,91 +8,97 @@ import collections
 
 
 def getElementLink(stringInput):
-    if (stringInput == "Fire"):
-        return "https://cdn.discordapp.com/attachments/470712762314784799/504091443242205184/fire.png" #old img, replace with the round icons
+    if ("Fire" in stringInput):
+        return "https://cdn.discordapp.com/attachments/470712762314784799/504091443242205184/fire.png" 
 
-    if (stringInput == "Earth"):
-        return "https://cdn.discordapp.com/attachments/470712762314784799/504091441908154369/earth.png" #old img, replace with the round icons
+    if ("Earth" in stringInput):
+        return "https://cdn.discordapp.com/attachments/470712762314784799/504091441908154369/earth.png" 
 
-    if (stringInput == "Lightning"):
-        return "https://cdn.discordapp.com/attachments/470712762314784799/504091445825765386/lightning.png"#old img, replace with the round icons
+    if ("Lightning" in stringInput):
+        return "https://cdn.discordapp.com/attachments/470712762314784799/504091445825765386/lightning.png"
 
-    if (stringInput == "Water"):
-        return "https://cdn.discordapp.com/attachments/470712762314784799/504091447809540126/water.png"#old img, replace with the round icons
+    if ("Water" in stringInput):
+        return "https://cdn.discordapp.com/attachments/470712762314784799/504091447809540126/water.png"
 
-    if (stringInput == "Light (Holy)" or stringInput == "Light" or stringInput == "Holy"):
-        return "https://cdn.discordapp.com/attachments/470712762314784799/504091444085129236/light.png"#old img, replace with the round icons
+    if ("Light (Holy)" in stringInput or "Light" in stringInput or "Holy" in stringInput):
+        return "https://cdn.discordapp.com/attachments/470712762314784799/504091444085129236/light.png"
 
-    if (stringInput == "Dark"):
-        return "https://cdn.discordapp.com/attachments/470712762314784799/504091435327422464/dark.png"#old img, replace with the round icons
+    if ("Dark" in stringInput):
+        return "https://cdn.discordapp.com/attachments/470712762314784799/504091435327422464/dark.png"
 
-    if (stringInput == "Hybrid"):
+    if ("Hybrid" in stringInput):
         return "https://media.discordapp.net/attachments/456208112790142977/498370434912485406/IIC_90000001.png"
 
-    if (stringInput == "Support"):
+    if ("Support" in stringInput):
         return "https://media.discordapp.net/attachments/456208112790142977/498370436866899969/IIC_90000002.png"
 
-    if (stringInput == "Heal"):
+    if ("Heal" in stringInput):
         return "https://media.discordapp.net/attachments/456208112790142977/498370439219904512/IIC_90000003.png"
 
-    if (stringInput == "Passive"):
+    if ("Passive" in stringInput):
         return "https://media.discordapp.net/attachments/456208112790142977/498370434744582144/IIC_90000004.png"
 
-    if (stringInput == "List"):
+    if ("List" in stringInput):
         return "https://media.discordapp.net/attachments/456208112790142977/471391949572800514/SS.png"
+		
+	return "https://media.discordapp.net/attachments/456208112790142977/471391949572800514/SS.png"
 
 def getElementEmoji(stringInput):
-    if (stringInput == "Fire"):
+    if ("Fire" in stringInput):
         return f"<a:Fire:492102021911019521> - {stringInput}" 
 
-    if (stringInput == "Earth"):
+    if ("Earth" in stringInput):
         return f"<a:Earth:492101844148027412> - {stringInput}" 
 
-    if (stringInput == "Lightning"):
+    if ("Lightning" in stringInput):
         return f"<a:Lightning:492102153348055043> - {stringInput}"
 
-    if (stringInput == "Water"):
+    if ("Water" in stringInput):
         return f"<a:Water:492102291092930560> - {stringInput}"
 
-    if (stringInput == "Light (Holy)" or stringInput == "Light" or stringInput == "Holy"):
+    if ("Light (Holy)" in stringInput or "Light" in stringInput or "Holy" in stringInput):
         return f"<a:LightHoly:492101364998995968> - {stringInput}"
 
-    if (stringInput == "Dark"):
+    if ("Dark" in stringInput):
         return f"<a:Dark:492101704167194625> - {stringInput}"
+	
+	return f"{stringInput}"	
 
 def getElementColor(stringInput):
-    if (stringInput == "Fire"):
+    if ("Fire" in stringInput):
         return 0xff0000
 
-    if (stringInput == "Earth"):
+    if ("Earth" in stringInput):
         return 0x03FA17
 
-    if (stringInput == "Lightning"):
+    if ("Lightning" in stringInput):
         return 0xFAD603
 
-    if (stringInput == "Water"):
+    if ("Water" in stringInput):
         return 0x00E0FF
 
-    if (stringInput == "Light (Holy)" or stringInput == "Light" or stringInput == "Holy"):
+    if ("Light (Holy)" in stringInput or "Light" in stringInput or "Holy" in stringInput):
         return 0xFAFAB6
 
-    if (stringInput == "Dark"):
+    if ("Dark" in stringInput):
         return 0x9013FE
 
-    if (stringInput == "Hybrid"):
+    if ("Hybrid" in stringInput):
         return 0x000000
 
-    if (stringInput == "Support"):
+    if ("Support" in stringInput):
         return 0x00ffff
 
-    if (stringInput == "Heal"):
+    if ("Heal" in stringInput):
         return 0x00ff00
 
-    if (stringInput == "Passive"):
+    if ("Passive" in stringInput):
         return 0xffe599
     
-    if (stringInput == "List"):
+    if ("List" in stringInput):
         return 0x8e8e8e
+	
+	return 0x000000
 
 def getWeaponElement(stringInput):
     stringInputLower = stringInput.lower()
