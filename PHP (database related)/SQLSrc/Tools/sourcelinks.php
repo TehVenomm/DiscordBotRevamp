@@ -1,25 +1,26 @@
 <?php
-    $linkWeapon = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1649858326";
 
-    $linkArmour = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1246220037";
+    $linkWeapon 		= "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1649858326";
 
-    $linkFireMagi = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=2090117085";
+    $linkArmour 		= "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1246220037";
 
-    $linkWaterMagi = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1312089235";
+    $link["Fire"] 		=  "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=2090117085";
 
-    $linkEarthMagi = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=862287196";
+    $link["Water"] 		=  "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1312089235";
 
-    $linkLightningMagi = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=466948995";
+    $link["Earth"] 		= "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=862287196";
 
-    $linkLightMagi = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=514467205";
+    $link["Lightning"] 	= "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=466948995";
 
-    $linkDarkMagi = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1065376842";
+    $link["Light"]	 	= "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=514467205";
 
-    $linkHybridMagi = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1725224726";
+    $link["Dark"] 		= "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1065376842";
 
-    $linkSupportMagi = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1216828397";
+    $link["Hybrid"] 	= "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1725224726";
 
-    $linkHealMagi = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1938276774";
+    $link["Support"] 	= "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1216828397";
 
-    $linkPassiveMagi = "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1953260082";
+    $link["Heal"] 		= "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1938276774";
+
+    $link["Passive"] 	= "https://docs.google.com/spreadsheets/d/1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU/export?format=csv&id=1iMoiSjTbahFxfOyU4F4_xOWtS3Va22_J1tyizyDltNU&gid=1953260082";
 ?>

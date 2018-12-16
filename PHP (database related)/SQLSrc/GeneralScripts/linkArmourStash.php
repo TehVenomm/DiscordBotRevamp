@@ -111,5 +111,5 @@
 ?>
 
 <a href="../../index.php">
-    <input type="button" value="gz ur done">
+    <input type="button" value="Finish">
 </a>

@@ -15,13 +15,12 @@
 
     function filterNotObs($stringInput)
     {
-        $emptyString = "";
         if (strpos($stringInput, '❈') !== false) {
             return $stringInput;
         } 
         else
         {
-            return $emptyString;
+            return "";
         }
     }
     function grabCSVData($linkString)
@@ -43,14 +42,15 @@
         return $obtained_data;
     }
     //specific functions
-    function insertMagiDB($CSVData, $MagiTypeString)
+    function generateMagiInsertDB($CSVData, $MagiTypeString, $nameExistsArray, $magiTypeList)
     {
-        include "conexao.php";
-
         $CSVRowCounter = 0;
+		
+		$builderArray = [];
 
         foreach($CSVData as $rowcount)
         {
+
             if($CSVRowCounter > 1)
             {
                 $MagiHealCSV        = "";
@@ -58,35 +58,35 @@
                 {
                     $MagiNameCSV        = removeSpecialChars($rowcount[0]);
                     $MagiCDCSV          = "0";
-                    $MagiDescCSV        = $rowcount[4];
+                    $MagiDescCSV        = str_replace("'", "\'", $rowcount[4]);
                     $MagiobsString      = "";
                 }
                 else if ($MagiTypeString == "Heal")
                 {
                     $MagiNameCSV        = removeSpecialChars($rowcount[0]);
-                    $MagiCDCSV          = $rowcount[1];
-                    $MagiHealCSV        = $rowcount[2];
-                    $MagiDescCSV        = $rowcount[6];
-                    $MagiobsString      = filterNotObs($rowcount[7]);
+                    $MagiCDCSV          = str_replace("'", "\'", $rowcount[1]);
+                    $MagiHealCSV        = str_replace("'", "\'", $rowcount[2]);
+                    $MagiDescCSV        = str_replace("'", "\'", $rowcount[6]);
+                    $MagiobsString      = str_replace("'", "\'", filterNotObs($rowcount[7]));
                     
                 } 
                 else
                 {
                     $MagiNameCSV        = removeSpecialChars($rowcount[0]);
-                    $MagiCDCSV          = $rowcount[1];
-                    $MagiDescCSV        = $rowcount[5];
-                    $MagiobsString      = filterNotObs($rowcount[6]);
+                    $MagiCDCSV          = str_replace("'", "\'", $rowcount[1]);
+                    $MagiDescCSV        = str_replace("'", "\'", $rowcount[5]);
+                    $MagiobsString      = str_replace("'", "\'", filterNotObs($rowcount[6]));
                     
                 }
 
-
-                $idMagiType = getMagiTypeId($MagiTypeString);
+                $idMagiType = $magiTypeList[$MagiTypeString];
 
                 if (!empty($MagiDescCSV))
                 {
-                    if(!nameExistsInDB($MagiNameCSV))
+                    if(!in_array($MagiNameCSV, $nameExistsArray))
                     {
-                        insertMagiInDB($MagiNameCSV, $MagiCDCSV, $MagiDescCSV, $MagiobsString, $idMagiType, $MagiHealCSV);
+						$builderArray[] = "( '".$MagiNameCSV."', '".$MagiCDCSV."', '".$MagiHealCSV."', '".$MagiDescCSV."', '".$MagiobsString."', ".$idMagiType." )";
+						
                     } 
                     else 
                     {
@@ -98,8 +98,8 @@
             $CSVRowCounter++;
 
         }
-
-        $conex = NULL;
+	
+		return $builderArray;
     }
 
     function weaponBehemothProcedure($spreadsheet_data){
@@ -131,84 +131,89 @@
     }
 
     //specific database functions
-    function getMagiTypeId($string){
+    function getMagiTypes(){ //returns an array of Name => Id for each magi type
         include "conexao.php";
 
-        $sql                = "SELECT idMagiType FROM magitypelist WHERE magitypelist.Name = ?";
-        $query      = $conex -> prepare($sql);
-
+        $sql = "SELECT idMagiType, Name FROM magitypelist";
+        
         try
         {
-            $query -> execute(array($string));
+            $magiTypeQuery = $conex->query($sql);
         } 
-        catch (Exception $query) 
+        catch (Exception $magiTypeQuery) 
         {
-            echo 'Caught exception: ',  $query->getMessage(), "</br>";
+            echo 'Caught exception: ',  $magiTypeQuery->getMessage(), "</br>";
         }
-        foreach($query as $x)
+        foreach($magiTypeQuery as $x)
         {
-            $ObtainedID = $x["idMagiType"];
+            $result[$x["Name"]] = $x["idMagiType"];
         }
 
         $conex = NULL;
-
-        return $ObtainedID;
+        return $result;
     }
 
-    function nameExistsInDB($nameString){
+    function magiInDBList(){
         include "conexao.php";
 
-        $sql           = "SELECT idMagi FROM magitable WHERE magitable.Name = ?";
+        $sql           = "SELECT Name FROM magitable";
         $existsQuery   = $conex -> prepare($sql);
+		$nameStringArray = [];
 
         try
         {
-            $existsQuery -> execute(array($nameString));
+            $existsQuery->execute();
         } 
         catch (Exception $existsQuery) 
         {
             echo 'Caught exception: ',  $existsQuery->getMessage(), "</br>";
         }
+		
         foreach($existsQuery as $x)
         {
-            $nameString = $x["idMagi"];
+            $nameStringArray[] = $x["Name"];
         }
-
-        $qty = 0;
-        $qty = $existsQuery->rowCount();
 
         $conex = NULL;
-
-        if ($qty > 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+		return $nameStringArray;
     }
 
-    function insertMagiInDB($Name, $cooldown, $description, $observation, $idType, $MagiHealCSV)
+    function insertMagiInDB($magiArray)
     {
         include "conexao.php";
 
-        $sql             = "INSERT INTO `magitable` VALUES ('', ?, ?, ?, ?, ?, ?)";
-        $insertMagiQuery = $conex -> prepare($sql);
-
-        try
-        {
-            $insertMagiQuery -> execute(array($Name, $cooldown, $MagiHealCSV, $description, $observation, $idType));
-        } 
-        catch (Exception $insertMagiQuery) 
-        {
-            echo 'Caught exception: ',  $insertMagiQuery->getMessage(), "</br>";
-            $conex = NULL;
-            return false;
-        }
+        $sql             = "INSERT INTO `magitable` (`Name`, `Cooldown`, `HealAmount`, `Description`, `Obs`, `IdMagiType_MagiTable`) VALUES ";
+		$i = 0;
+		
+		if (is_array($magiArray)) {
+			foreach ($magiArray as $row){
+				if( !next( $magiArray ) ) {
+					$sql .= $row."; ";
+				} else {
+					$sql .= $row.", ";
+				}
+			}
+		} elseif (!empty($magiArray)){
+			$sql .= $magiArray."; ";
+		}
+		
+		if (!empty($magiArray)){	
+			try
+			{
+				$insertMagiQuery = $conex -> query($sql);
+			} 
+			catch (Exception $insertMagiQuery) 
+			{
+				echo 'Caught exception: ',  $insertMagiQuery->getMessage(), "</br>";
+				$conex = NULL;
+				return false;
+			}
+		} else {
+			echo "Nothing to insert.";
+			return false;
+		}
 
         $conex = NULL;
-        return true;
     }
 
     function insertWeaponInDB($typeString, $tierString, $elementString, $pAttackString, $eAttackString, $abilityString, $obsString)
