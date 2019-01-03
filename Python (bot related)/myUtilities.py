@@ -40,8 +40,8 @@ def getElementLink(stringInput):
 
     if ("List" in stringInput):
         return "https://media.discordapp.net/attachments/456208112790142977/471391949572800514/SS.png"
-		
-	return "https://media.discordapp.net/attachments/456208112790142977/471391949572800514/SS.png"
+        
+    return "https://media.discordapp.net/attachments/456208112790142977/471391949572800514/SS.png"
 
 def getElementEmoji(stringInput):
     if ("Fire" in stringInput):
@@ -61,8 +61,8 @@ def getElementEmoji(stringInput):
 
     if ("Dark" in stringInput):
         return f"<a:Dark:492101704167194625> - {stringInput}"
-	
-	return f"{stringInput}"	
+    
+    return f"{stringInput}"    
 
 def getElementColor(stringInput):
     if ("Fire" in stringInput):
@@ -97,8 +97,8 @@ def getElementColor(stringInput):
     
     if ("List" in stringInput):
         return 0x8e8e8e
-	
-	return 0x000000
+    
+    return 0x000000
 
 def getWeaponElement(stringInput):
     stringInputLower = stringInput.lower()
