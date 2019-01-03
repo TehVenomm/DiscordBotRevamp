@@ -12,6 +12,12 @@
         $fixedString = preg_replace('/[^0-9a-zA-Z\s★()]/',"",$stringInput);
         return $fixedString;
     }
+	
+	function filterName($stringInput)
+    {
+        $fixedString = preg_replace('/[^0-9a-zA-Z\s]/',"",$stringInput);
+        return $fixedString;
+    }
 
     function filterNotObs($stringInput)
     {
@@ -56,14 +62,14 @@
                 $MagiHealCSV        = "";
                 if ($MagiTypeString == "Passive")
                 {
-                    $MagiNameCSV        = removeSpecialChars($rowcount[0]);
+                    $MagiNameCSV        = str_replace("'", "\'", removeSpecialChars($rowcount[0]));
                     $MagiCDCSV          = "0";
                     $MagiDescCSV        = str_replace("'", "\'", $rowcount[4]);
                     $MagiobsString      = "";
                 }
                 else if ($MagiTypeString == "Heal")
                 {
-                    $MagiNameCSV        = removeSpecialChars($rowcount[0]);
+                    $MagiNameCSV        = str_replace("'", "\'", removeSpecialChars($rowcount[0]));
                     $MagiCDCSV          = str_replace("'", "\'", $rowcount[1]);
                     $MagiHealCSV        = str_replace("'", "\'", $rowcount[2]);
                     $MagiDescCSV        = str_replace("'", "\'", $rowcount[6]);
@@ -72,20 +78,20 @@
                 } 
                 else
                 {
-                    $MagiNameCSV        = removeSpecialChars($rowcount[0]);
+                    $MagiNameCSV        = str_replace("'", "\'", removeSpecialChars($rowcount[0]));
                     $MagiCDCSV          = str_replace("'", "\'", $rowcount[1]);
                     $MagiDescCSV        = str_replace("'", "\'", $rowcount[5]);
                     $MagiobsString      = str_replace("'", "\'", filterNotObs($rowcount[6]));
-                    
                 }
-
+				
+				$MagiNameClear			= filterName($rowcount[0]);
                 $idMagiType = $magiTypeList[$MagiTypeString];
 
                 if (!empty($MagiDescCSV))
                 {
                     if(!in_array($MagiNameCSV, $nameExistsArray))
                     {
-						$builderArray[] = "( '".$MagiNameCSV."', '".$MagiCDCSV."', '".$MagiHealCSV."', '".$MagiDescCSV."', '".$MagiobsString."', ".$idMagiType." )";
+						$builderArray[] = "( '".$MagiNameCSV."', '".$MagiCDCSV."', '".$MagiHealCSV."', '".$MagiDescCSV."', '".$MagiobsString."', ".$idMagiType.", '".$MagiNameClear."' )";
 						
                     } 
                     else 
@@ -109,21 +115,23 @@
         {
             if($skipHeaderCounter > 1)
             {
-                $behemothName   = $rowcount[0];
-                $typeCSV        = $rowcount[1];
-                $elementCSV     = $rowcount[2];
-                $tierCSV        = $rowcount[3];
+                $behemothName   	= $rowcount[0];
+                $typeCSV        	= $rowcount[1];
+                $elementCSV     	= $rowcount[2];
+                $tierCSV        	= $rowcount[3];
 
-                $pAttackCSV     = $rowcount[6];
-                $eAttackCSV     = $rowcount[7];
+                $pAttackCSV     	= $rowcount[6];
+                $eAttackCSV     	= $rowcount[7];
 
-                $abilityCSV     = $rowcount[11];
-                $obsCSV         = filterNotObs($rowcount[12]);
+                $abilityCSV     	= $rowcount[11];
+                $obsCSV         	= filterNotObs($rowcount[12]);
+				
+				$behemothNameClear 	= filterName($rowcount[0]);
                 
                 if (!empty($abilityCSV))
                 {
                     $lastWeaponId = insertWeaponInDB($typeCSV, $tierCSV, $elementCSV, $pAttackCSV, $eAttackCSV, $abilityCSV, $obsCSV);
-                    insertBehemothInDB($behemothName, $elementCSV, $lastWeaponId);
+                    insertBehemothInDB($behemothName, $elementCSV, $lastWeaponId, $behemothNameClear);
                 }
             }
             $skipHeaderCounter++;
@@ -182,7 +190,7 @@
     {
         include "conexao.php";
 
-        $sql             = "INSERT INTO `magitable` (`Name`, `Cooldown`, `HealAmount`, `Description`, `Obs`, `IdMagiType_MagiTable`) VALUES ";
+        $sql             = "INSERT INTO `magitable` (`Name`, `Cooldown`, `HealAmount`, `Description`, `Obs`, `IdMagiType_MagiTable`, `name_clean`) VALUES ";
 		$i = 0;
 		
 		if (is_array($magiArray)) {
@@ -237,16 +245,16 @@
         return $lastWeaponId;
     }
 
-    function insertBehemothInDB($nameString, $elementString, $weaponID)
+    function insertBehemothInDB($nameString, $elementString, $weaponID, $clearName)
     {
         include "conexao.php";
         
-        $sql = "INSERT IGNORE INTO `behemothtable` VALUES ('', ?, ?, ?)";
+        $sql = "INSERT IGNORE INTO `behemothtable` VALUES ('', ?, ?, ?, ?)";
         $weaponQuery = $conex -> prepare($sql);
 
         try
         {
-            $weaponQuery -> execute(array($nameString, $elementString, $weaponID));
+            $weaponQuery -> execute(array($nameString, $elementString, $weaponID, $clearName));
         } 
         catch (Exception $weaponQuery)
         {

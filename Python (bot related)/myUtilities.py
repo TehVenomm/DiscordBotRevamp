@@ -215,7 +215,7 @@ def fetchBehemothDB(name):
 
     try:
         with connection.cursor() as cursor:
-            sql = f"SELECT B.Name AS BeheName, B.Element as BeheElement, W.Type AS WepType, W.Tier AS WepTier, W.Ability AS WepAbility, A.Ability AS ArmourAbility FROM behemothtable AS B INNER JOIN weapontable AS W ON W.IdWeapon = B.IdWeapon_BehemothTable INNER JOIN armourtable AS A ON A.IdBehemoth_ArmourTable = B.IdBehemoth WHERE B.Name LIKE '%{name}%' GROUP BY B.IdBehemoth"
+            sql = f"SELECT B.Name AS BeheName, B.Element as BeheElement, W.Type AS WepType, W.Tier AS WepTier, W.Ability AS WepAbility, A.Ability AS ArmourAbility FROM behemothtable AS B INNER JOIN weapontable AS W ON W.IdWeapon = B.IdWeapon_BehemothTable INNER JOIN armourtable AS A ON A.IdBehemoth_ArmourTable = B.IdBehemoth WHERE B.name_clean LIKE '%{name}%' GROUP BY B.IdBehemoth"
             cursor.execute(sql) 
             result = cursor.fetchall()
 
@@ -228,7 +228,7 @@ def fetchWeaponDB(name):
 
     try:
         with connection.cursor() as cursor:
-            sql = f"SELECT behemothtable.Name, behemothtable.Element, weapontable.Type, weapontable.Tier, weapontable.PhysAttack, weapontable.ElemAttack, weapontable.Ability, weapontable.Obs FROM behemothtable INNER JOIN weapontable ON weapontable.IdWeapon = behemothtable.IdWeapon_BehemothTable WHERE behemothtable.Name LIKE '%{name}%'"
+            sql = f"SELECT behemothtable.Name, behemothtable.Element, weapontable.Type, weapontable.Tier, weapontable.PhysAttack, weapontable.ElemAttack, weapontable.Ability, weapontable.Obs FROM behemothtable INNER JOIN weapontable ON weapontable.IdWeapon = behemothtable.IdWeapon_BehemothTable WHERE behemothtable.name_clean LIKE '%{name}%'"
             cursor.execute(sql)
             result = cursor.fetchall()
             return result
@@ -240,7 +240,7 @@ def fetchArmorDB(name):
     
     try:
         with connection.cursor() as cursor:
-            sql = f"SELECT behemothtable.Name AS BeheName, behemothtable.Element AS BeheElement, armourtable.DefElement AS ArmorElement, armourtable.HpValue AS ArmorHP, armourtable.PhysDef AS ArmorPDef, armourtable.ElemDef AS ArmorEDef, armourtable.PhysAttack AS ArmorPAtk, armourtypelist.Name AS ArmorType, armourtable.Ability AS ArmorAbility, armourtable.Obs AS ArmorObs FROM behemothtable LEFT JOIN armourtable ON armourtable.IdBehemoth_ArmourTable = behemothtable.IdBehemoth LEFT JOIN armourtypelist ON armourtypelist.IdArmourTypeList = armourtable.IdArmourtype_ArmourTable WHERE behemothtable.Name LIKE '%{name}%'"
+            sql = f"SELECT behemothtable.Name AS BeheName, behemothtable.Element AS BeheElement, armourtable.DefElement AS ArmorElement, armourtable.HpValue AS ArmorHP, armourtable.PhysDef AS ArmorPDef, armourtable.ElemDef AS ArmorEDef, armourtable.PhysAttack AS ArmorPAtk, armourtypelist.Name AS ArmorType, armourtable.Ability AS ArmorAbility, armourtable.Obs AS ArmorObs FROM behemothtable LEFT JOIN armourtable ON armourtable.IdBehemoth_ArmourTable = behemothtable.IdBehemoth LEFT JOIN armourtypelist ON armourtypelist.IdArmourTypeList = armourtable.IdArmourtype_ArmourTable WHERE behemothtable.name_clean LIKE '%{name}%'"
             cursor.execute(sql) 
             result = cursor.fetchall()
             return result
@@ -252,7 +252,7 @@ def fetchMagiDB(name):
     
     try:
         with connection.cursor() as cursor:
-            sql = f"SELECT magitable.Name, magitable.Cooldown, magitable.HealAmount, magitable.Description, magitable.Obs, magitypelist.Name FROM magitable INNER JOIN magitypelist ON magitypelist.IdMagiType = magitable.IdMagiType_MagiTable WHERE magitable.Name LIKE '%{name}%'"
+            sql = f"SELECT magitable.Name, magitable.Cooldown, magitable.HealAmount, magitable.Description, magitable.Obs, magitypelist.Name FROM magitable INNER JOIN magitypelist ON magitypelist.IdMagiType = magitable.IdMagiType_MagiTable WHERE magitable.name_clean LIKE '%{name}%'"
             cursor.execute(sql) #this returns the amount of rows affected.
             result = cursor.fetchall()
             return result

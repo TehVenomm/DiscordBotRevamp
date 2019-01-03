@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 28-Jul-2018 às 08:09
--- Versão do servidor: 10.1.34-MariaDB
--- PHP Version: 7.2.7
+-- Generation Time: 03-Jan-2019 às 12:37
+-- Versão do servidor: 10.1.31-MariaDB
+-- PHP Version: 7.0.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -74,7 +74,8 @@ CREATE TABLE `behemothtable` (
   `IdBehemoth` int(11) NOT NULL,
   `Name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `Element` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `IdWeapon_BehemothTable` int(11) NOT NULL
+  `IdWeapon_BehemothTable` int(11) NOT NULL,
+  `name_clean` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -146,11 +147,12 @@ INSERT INTO `icontable` (`idIcon`, `behemothName`, `imageLink`) VALUES
 CREATE TABLE `magitable` (
   `IdMagi` int(11) NOT NULL,
   `Name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `Cooldown` varchar(50) NOT NULL,
-  `HealAmount` varchar(50) NOT NULL,
+  `Cooldown` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `HealAmount` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `Description` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `Obs` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `IdMagiType_MagiTable` int(11) NOT NULL
+  `IdMagiType_MagiTable` int(11) NOT NULL,
+  `name_clean` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -301,7 +303,7 @@ ALTER TABLE `weapontable`
 -- Limitadores para a tabela `armourtable`
 --
 ALTER TABLE `armourtable`
-  ADD CONSTRAINT `armourtable_ibfk_1` FOREIGN KEY (`IdArmourtype_ArmourTable`) REFERENCES `armourtypelist` (`idArmourTypeList`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `armourtable_ibfk_1` FOREIGN KEY (`IdArmourtype_ArmourTable`) REFERENCES `armourtypelist` (`IdArmourTypeList`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `armourtable_ibfk_2` FOREIGN KEY (`IdBehemoth_ArmourTable`) REFERENCES `behemothtable` (`IdBehemoth`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
