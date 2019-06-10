@@ -210,9 +210,10 @@ def matchWeaponAttributes(inputWordArray):
     return returnDict
 
 def isExactMatch(behemothArray, inputString):
+	exactMatchBehemoth = []
     for idx, line in enumerate(behemothArray, start=0):
         if(line['BeheName'].lower() == inputString.lower()):
-            exactMatchBehemoth[0] = line
+            exactMatchBehemoth = line
             return exactMatchBehemoth
     
     return false
