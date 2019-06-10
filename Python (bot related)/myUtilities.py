@@ -352,7 +352,7 @@ def magiEmbedGenerator(magiArray, inputString):
 def behemothEmbedGenerator(behemothArray, inputString):
     behemothMatchArray = isExactMatch(behemothArray, inputString)
     
-    if (behemothMatchArray != false):
+    if (behemothMatchArray != False):
         embed = behemothMatchArray
         return embed
     
