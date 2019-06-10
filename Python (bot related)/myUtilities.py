@@ -211,11 +211,11 @@ def matchWeaponAttributes(inputWordArray):
 
 def isExactMatch(behemothArray, inputString):
     for idx, line in enumerate(behemothArray, start=0):
-		if(line['beheName'].lower() == inputString.lower()):
-			exactMatchBehemoth[0] = line
-			return exactMatchBehemoth
-	
-	return false
+        if(line['beheName'].lower() == inputString.lower()):
+            exactMatchBehemoth[0] = line
+            return exactMatchBehemoth
+    
+    return false
 
 def fetchBehemothDB(name):
     connection = secrets.getConnection()
@@ -349,12 +349,12 @@ def magiEmbedGenerator(magiArray, inputString):
     return embed
 
 def behemothEmbedGenerator(behemothArray, inputString):
-	behemothMatchArray = isExactMatch(behemothArray, inputString)
-	
-	if (behemothMatchArray != false):
-		embed = behemothMatchArray
-		return embed
-	
+    behemothMatchArray = isExactMatch(behemothArray, inputString)
+    
+    if (behemothMatchArray != false):
+        embed = behemothMatchArray
+        return embed
+    
     if (len(behemothArray) == 1):
         embed = singleBehemothEmbed(behemothArray)
     else:
