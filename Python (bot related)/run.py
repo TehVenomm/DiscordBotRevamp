@@ -71,33 +71,5 @@ async def magi(ctx, *a):
         await ctx.send(embed=embed)
     else:
         await ctx.send("Magi not found.")
-    
-@armor.error
-async def armor_on_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(title="The correct syntax is:", colour=discord.Colour(0xff0000), description="`?armor [Behemoth's name]`")
-        await ctx.send(embed=embed)
-    raise error
-
-@weapon.error
-async def weapon_on_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(title="The correct syntax is:", colour=discord.Colour(0xff0000), description="`?weapon [Behemoth's name]`")
-        await ctx.send(embed=embed)
-    raise error
-
-@behemoth.error
-async def behemoth_on_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(title="The correct syntax is:", colour=discord.Colour(0xff0000), description="`?behemoth [Behemoth's name]`")
-        await ctx.send(embed=embed)
-    raise error
-
-@magi.error
-async def magi_on_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(title="The correct syntax is:", colour=discord.Colour(0xff0000), description="`?magi [Magi's name]`")
-        await ctx.send(embed=embed)
-    raise error
 
 bot.run(secrets.getToken())
