@@ -213,10 +213,10 @@ def isExactMatch(behemothArray, inputString):
     exactMatchBehemoth = []
     for idx, line in enumerate(behemothArray, start=0):
         if(line['BeheName'].lower() == inputString.lower()):
-            exactMatchBehemoth = line
+            exactMatchBehemoth.append(line)
             return exactMatchBehemoth
     
-    return false
+    return False
 
 def fetchBehemothDB(name):
     connection = secrets.getConnection()
@@ -353,7 +353,7 @@ def behemothEmbedGenerator(behemothArray, inputString):
     behemothMatchArray = isExactMatch(behemothArray, inputString)
     
     if (behemothMatchArray != False):
-        embed = behemothMatchArray
+        embed = singleBehemothEmbed(behemothMatchArray)
         return embed
     
     if (len(behemothArray) == 1):
